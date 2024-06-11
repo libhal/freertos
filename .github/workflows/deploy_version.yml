@@ -1,0 +1,94 @@
+name: 🚀 Deploy Version
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        type: string
+        required: true
+
+jobs:
+  cortex-m0:
+    uses: libhal/ci/.github/workflows/deploy.yml@5.x.y
+    with:
+      library: freertos
+      repo: ${{ github.repository }}
+      version: ${{ inputs.version }}
+      conan_version: 2.2.0
+      compiler: gcc
+      compiler_version: 12.3
+      compiler_package: arm-gnu-toolchain
+      arch: cortex-m0
+      os: baremetal
+      external_package: true
+    secrets: inherit
+  cortex-m0plus:
+    uses: libhal/ci/.github/workflows/deploy.yml@5.x.y
+    with:
+      library: freertos
+      repo: ${{ github.repository }}
+      version: ${{ inputs.version }}
+      conan_version: 2.2.0
+      compiler: gcc
+      compiler_version: 12.3
+      compiler_package: arm-gnu-toolchain
+      arch: cortex-m0plus
+      os: baremetal
+      external_package: true
+    secrets: inherit
+  cortex-m1:
+    uses: libhal/ci/.github/workflows/deploy.yml@5.x.y
+    with:
+      library: freertos
+      repo: ${{ github.repository }}
+      version: ${{ inputs.version }}
+      conan_version: 2.2.0
+      compiler: gcc
+      compiler_version: 12.3
+      compiler_package: arm-gnu-toolchain
+      arch: cortex-m1
+      os: baremetal
+      external_package: true
+    secrets: inherit
+  cortex-m3:
+    uses: libhal/ci/.github/workflows/deploy.yml@5.x.y
+    with:
+      library: freertos
+      repo: ${{ github.repository }}
+      version: ${{ inputs.version }}
+      conan_version: 2.2.0
+      compiler: gcc
+      compiler_version: 12.3
+      compiler_package: arm-gnu-toolchain
+      arch: cortex-m3
+      os: baremetal
+      external_package: true
+    secrets: inherit
+  cortex-m4:
+    uses: libhal/ci/.github/workflows/deploy.yml@5.x.y
+    with:
+      library: freertos
+      repo: ${{ github.repository }}
+      version: ${{ inputs.version }}
+      conan_version: 2.2.0
+      compiler: gcc
+      compiler_version: 12.3
+      compiler_package: arm-gnu-toolchain
+      arch: cortex-m4
+      os: baremetal
+      external_package: true
+    secrets: inherit
+  cortex-m4f:
+    uses: libhal/ci/.github/workflows/deploy.yml@5.x.y
+    with:
+      library: freertos
+      repo: ${{ github.repository }}
+      version: ${{ inputs.version }}
+      conan_version: 2.2.0
+      compiler: gcc
+      compiler_version: 12.3
+      compiler_package: arm-gnu-toolchain
+      arch: cortex-m4f
+      os: baremetal
+      external_package: true
+    secrets: inherit
