@@ -277,10 +277,10 @@ class FreeRTOS(ConanFile):
              ).write_text(config_file)
 
         cmake = CMake(self)
-        head_type = self.options.get_safe("FREERTOS_HEAP", 3)
+        heap_type = self.options.get_safe("FREERTOS_HEAP", 3)
 
         cmake.configure(variables={
-            "FREERTOS_HEAP": int(str(head_type)),
+            "FREERTOS_HEAP": int(str(heap_type)),
             "FREERTOS_PORT": self.freertos_port,
         })
 
