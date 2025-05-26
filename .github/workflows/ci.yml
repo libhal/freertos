@@ -29,7 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: 📥 Install CMake + Conan
-        run: pip3 install cmake conan
+        run: pipx install cmake conan
 
       - name: 📡 Add `libhal` repo to conan remotes
         run: conan remote add libhal
