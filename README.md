@@ -1,5 +1,7 @@
 # `libhal/freertos`
 
+[![✅ CI](https://github.com/libhal/freertos/actions/workflows/ci.yml/badge.svg)](https://github.com/libhal/freertos/actions/workflows/ci.yml)
+
 FreeRTOS conan package compatible with the libhal ecosystem.
 
 ## Using it with C++
