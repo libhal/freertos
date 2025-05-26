@@ -20,7 +20,7 @@
 
 #include "../hardware_map.hpp"
 
-std::array<StackType_t, 64> stack;
+std::array<StackType_t, 256> stack;
 
 void
 blinker(void* p_hardware_map) noexcept
@@ -28,9 +28,9 @@ blinker(void* p_hardware_map) noexcept
   auto& hardware = *reinterpret_cast<hardware_map_t*>(p_hardware_map);
 
   while (true) {
-    (void)hardware.led->level(true);
+    hardware.led->level(true);
     vTaskDelay(500);
-    (void)hardware.led->level(false);
+    hardware.led->level(false);
     vTaskDelay(500);
   }
 }

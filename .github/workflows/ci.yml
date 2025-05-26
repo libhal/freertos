@@ -69,11 +69,11 @@ jobs:
       - name: 📦 Create `MinSizeRel` package for lpc4078
         run: conan create . --version=10.6.0 -pr lpc4078 -pr arm-gcc-12.3 -s build_type=MinSizeRel -b missing
 
-      - name: 📦 Create `MinSizeRel` package for stm32f103re
-        run: conan create . --version=10.6.0 -pr stm32f103re -pr arm-gcc-12.3 -s build_type=MinSizeRel -b missing
+      - name: 📦 Create `MinSizeRel` package for stm32f103c8
+        run: conan create . --version=10.6.0 -pr stm32f103c8 -pr arm-gcc-12.3 -s build_type=MinSizeRel -b missing
 
       - name: 📦 Build demo for lpc4078
         run: conan build demos -pr lpc4078 -pr arm-gcc-12.3 -s build_type=MinSizeRel
 
-      - name: 📦 Build demo for stm32f103re
-        run: conan build demos -pr stm32f103re -pr arm-gcc-12.3 -s build_type=MinSizeRel
+      - name: 📦 Build demo for stm32f103c8
+        run: conan build demos -pr stm32f103c8 -pr arm-gcc-12.3 -s build_type=MinSizeRel
