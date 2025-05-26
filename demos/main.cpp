@@ -19,10 +19,13 @@
 
 #include "hardware_map.hpp"
 
-int main()
+hardware_map_t hardware_map;
+
+int
+main()
 {
   try {
-    auto hardware_map = initialize_platform();
+    hardware_map = initialize_platform();
     application(hardware_map);
   } catch (...) {
     hal::halt();
@@ -34,9 +37,7 @@ int main()
 extern "C"
 {
   // This gets rid of an issue with libhal-exceptions in Debug mode.
-  void __assert_func()
-  {
-  }
+  void __assert_func() {}
 }
 
 extern "C"

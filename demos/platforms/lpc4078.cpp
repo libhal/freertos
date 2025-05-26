@@ -15,12 +15,13 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
-#include <libhal-armcortex/dwt_counter.hpp>
-#include <libhal-armcortex/interrupt.hpp>
-#include <libhal-armcortex/system_control.hpp>
-#include <libhal-armcortex/systick_timer.hpp>
-#include <libhal-lpc40/clock.hpp>
-#include <libhal-lpc40/output_pin.hpp>
+#include <libhal-arm-mcu/dwt_counter.hpp>
+#include <libhal-arm-mcu/interrupt.hpp>
+#include <libhal-arm-mcu/lpc40/clock.hpp>
+#include <libhal-arm-mcu/lpc40/interrupt.hpp>
+#include <libhal-arm-mcu/lpc40/output_pin.hpp>
+#include <libhal-arm-mcu/system_control.hpp>
+#include <libhal-arm-mcu/systick_timer.hpp>
 #include <libhal-util/steady_clock.hpp>
 
 #include "../hardware_map.hpp"
@@ -74,6 +75,11 @@ extern "C"
     static hal::cortex_m::systick_timer systick(cpu_frequency);
     try {
       systick.schedule(xPortSysTickHandler, 1ms);
+      // Override the handler set by systick to ensure its set correctly.
+      // systick schedule may wrap the function call which is problematic.
+      // But now its set to the correct period of 1ms
+      hal::cortex_m::enable_interrupt(hal::value(hal::cortex_m::irq::systick),
+                                      xPortSysTickHandler);
     } catch (...) {
       hal::halt();
     }
@@ -110,24 +116,22 @@ initialize_platform()
 
   global_steady_clock = &steady_clock;
 
-  hal::cortex_m::interrupt::initialize<hal::value(hal::lpc40::irq::max)>();
+  hal::lpc40::initialize_interrupts();
 
-  hal::cortex_m::interrupt(hal::value(hal::cortex_m::irq::hard_fault))
-    .enable(hard_fault_handler);
-  hal::cortex_m::interrupt(
-    hal::value(hal::cortex_m::irq::memory_management_fault))
-    .enable(memory_management_handler);
-  hal::cortex_m::interrupt(hal::value(hal::cortex_m::irq::bus_fault))
-    .enable(bus_fault_handler);
-  hal::cortex_m::interrupt(hal::value(hal::cortex_m::irq::usage_fault))
-    .enable(usage_fault_handler);
+  hal::cortex_m::enable_interrupt(hal::value(hal::cortex_m::irq::hard_fault),
+                                  hard_fault_handler);
+  hal::cortex_m::enable_interrupt(
+    hal::value(hal::cortex_m::irq::memory_management_fault),
+    memory_management_handler);
+  hal::cortex_m::enable_interrupt(hal::value(hal::cortex_m::irq::bus_fault),
+                                  bus_fault_handler);
+  hal::cortex_m::enable_interrupt(hal::value(hal::cortex_m::irq::usage_fault),
+                                  usage_fault_handler);
 
-  hal::cortex_m::interrupt(hal::value(hal::cortex_m::irq::sv_call))
-    .enable(vPortSVCHandler);
-  hal::cortex_m::interrupt(hal::value(hal::cortex_m::irq::pend_sv))
-    .enable(xPortPendSVHandler);
-  hal::cortex_m::interrupt(hal::value(hal::cortex_m::irq::systick))
-    .enable(xPortSysTickHandler);
+  hal::cortex_m::enable_interrupt(hal::value(hal::cortex_m::irq::software_call),
+                                  vPortSVCHandler);
+  hal::cortex_m::enable_interrupt(hal::value(hal::cortex_m::irq::pend_sv),
+                                  xPortPendSVHandler);
 
   return {
     .led = &led,
