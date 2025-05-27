@@ -1,4 +1,4 @@
-// Copyright 2024 Khalil Estell
+// Copyright 2024 - 2025 Khalil Estell and the libhal contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -82,7 +82,7 @@ extern "C"
       // Override the handler set by systick to ensure its set correctly.
       // systick schedule may wrap the function call which is problematic.
       // But now its set to the correct period of 1ms
-      hal::cortex_m::enable_interrupt(hal::value(hal::cortex_m::irq::systick),
+      hal::cortex_m::enable_interrupt(hal::cortex_m::irq::systick,
                                       xPortSysTickHandler);
     } catch (...) {
       hal::halt();
@@ -117,19 +117,17 @@ initialize_platform()
 
   hal::stm32f1::initialize_interrupts();
 
-  hal::cortex_m::enable_interrupt(hal::value(hal::cortex_m::irq::hard_fault),
+  hal::cortex_m::enable_interrupt(hal::cortex_m::irq::hard_fault,
                                   hard_fault_handler);
-  hal::cortex_m::enable_interrupt(
-    hal::value(hal::cortex_m::irq::memory_management_fault),
-    memory_management_handler);
-  hal::cortex_m::enable_interrupt(hal::value(hal::cortex_m::irq::bus_fault),
+  hal::cortex_m::enable_interrupt(hal::cortex_m::irq::memory_management_fault,
+                                  memory_management_handler);
+  hal::cortex_m::enable_interrupt(hal::cortex_m::irq::bus_fault,
                                   bus_fault_handler);
-  hal::cortex_m::enable_interrupt(hal::value(hal::cortex_m::irq::usage_fault),
+  hal::cortex_m::enable_interrupt(hal::cortex_m::irq::usage_fault,
                                   usage_fault_handler);
-
-  hal::cortex_m::enable_interrupt(hal::value(hal::cortex_m::irq::software_call),
+  hal::cortex_m::enable_interrupt(hal::cortex_m::irq::software_call,
                                   vPortSVCHandler);
-  hal::cortex_m::enable_interrupt(hal::value(hal::cortex_m::irq::pend_sv),
+  hal::cortex_m::enable_interrupt(hal::cortex_m::irq::pend_sv,
                                   xPortPendSVHandler);
 
   return {
