@@ -1,4 +1,4 @@
-// Copyright 2024 Khalil Estell
+// Copyright 2024 - 2025 Khalil Estell and the libhal contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@ the RTOS port. */
 StackType_t xStack[stack_size];
 
 /* Function that implements the task being created. */
-void vTaskCode(void* pvParameters)
+void
+vTaskCode(void* pvParameters)
 {
   /* The parameter value is expected to be 1 as 1 is passed in the
   pvParameters value in the call to xTaskCreateStatic(). */
@@ -36,7 +37,8 @@ void vTaskCode(void* pvParameters)
   }
 }
 
-int main()
+int
+main()
 {
   TaskHandle_t xHandle = NULL;
 
@@ -117,7 +119,5 @@ extern "C"
   {
     return 0;
   }
-  void _freertos_configure_high_resolution_timer(void)
-  {
-  }
+  void _freertos_configure_high_resolution_timer(void) {}
 }

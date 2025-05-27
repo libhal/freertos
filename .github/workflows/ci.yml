@@ -1,4 +1,4 @@
-# Copyright 2024 Khalil Estell
+# Copyright 2024 - 2025 Khalil Estell and the libhal contributors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -53,11 +53,8 @@ jobs:
       - name: Install compiler profiles
         run: conan config install -tf profiles -sf conan/profiles/v1 https://github.com/libhal/arm-gnu-toolchain.git
 
-      - name: Install "libhal-lpc40" platform profiles
-        run: conan config install -tf profiles -sf conan/profiles/v2 https://github.com/libhal/libhal-lpc40.git
-
-      - name: Install "libhal-stm32f1" platform profiles
-        run: conan config install -tf profiles -sf conan/profiles/v2 https://github.com/libhal/libhal-stm32f1.git
+      - name: Install "libhal-arm-mcu" platform profiles
+        run: conan config install -tf profiles -sf conan/profiles/v1 https://github.com/libhal/libhal-arm-mcu.git
 
       - name: 📦 Create `MinSizeRel` package for lpc4078
         run: conan create . --version=10.6.0 -pr lpc4078 -pr arm-gcc-12.3 -s build_type=MinSizeRel -b missing
